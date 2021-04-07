@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>sakila</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-5097629772306923655</string>
+			<key>name</key>
+			<string>localhost</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentFilterV2</key>
+			<dict>
+				<key>children</key>
+				<array/>
+				<key>filterClass</key>
+				<string>groupNode</string>
+				<key>isConjunction</key>
+				<true/>
+			</dict>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA0OFUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApXZmlsbV9pZNIiIzEyXxAPTlNNdXRhYmxl
+			U3RyaW5nozEzJ1hOU1N0cmluZ9IiIzU2Xk5TTXV0YWJsZUFycmF5
+			ozU3J1dOU0FycmF50iIjJjmiJicACAARABoAJAApADIANwBJAEwA
+			UQBTAGEAZwBuAHYAgQCIAIwAjgCQAJIAlgCYAJoAnACeAKMAqACt
+			ANYA3QDeAN8A4QDmAPEA+gEQARQBIQEqAS8BMQEzATUBOgFEAUYB
+			TgFTAWUBaQFyAXcBhgGKAZIBlwAAAAAAAAIBAAAAAAAAADoAAAAA
+			AAAAAAAAAAAAAAGa
+			</data>
+			<key>contentSortColIsAsc</key>
+			<false/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1218, 744}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>#lab 2.7 
+#1.In the actor table, which are the actors whose last names are not repeated? For example if you would sort the data in the table actor by last_name, you would see that there is Christian Arkoyd, Kirsten Arkoyd, and Debbie Arkoyd. These three actors have the same last name. So we do not want to include this last name in our output. Last name "Astaire" is present only one time with actor "Angelina Astaire", hence we would want this in our output list.
+
+select last_name
+from actor
+group by last_name
+having count(*) = 1;
+
+#or alternatively
+
+SELECT *
+FROM actor;
+
+
+SELECT
+	a.first_name,
+	a.last_name,
+	COUNT(a.last_name) AS num_family_name
+FROM sakila.actor a
+GROUP BY a.last_name, first_name
+HAVING a.last_name = 1;
+
+#2.Which last names appear more than once? We would use the same logic as in the previous question but this time we want to include the last names of the actors where the last name was present more than once.
+SELECT last_name, 
+	COUNT(last_name) AS NumOccurrences
+FROM actor
+GROUP BY last_name
+HAVING ( COUNT(last_name) &gt; 1 );
+
+#3.Using the rental table, find out how many rentals were processed by each employee.
+select rental_date, sum('rental_date') from sakila.rental
+group by rental_date
+order by rental_date;
+
+#4.Using the film table, find out how many films were released each year
+select release_year, sum('release_year') from sakila.film
+group by release_year
+order by release_year;
+
+#5.Using the film table, find out for each rating how many films were there.
+select rental_rate, sum('rental_rate') from sakila.film
+group by rental_rate
+order by rental_rate;
+
+#6.What is the average length of films for each rating? Round off the average lengths to two decimal places.
+select round(AVG(length),2) as avglength, length from sakila.film
+group by length
+
+#7.Which kind of movies (based on rating) have an average duration of two hours or more?
+SELECT `rental_duration`, 
+	AVG(`rental_duration`) 
+FROM film
+GROUP BY AVG(`rental_duration`)
+HAVING ( AVG(rental_duration) &gt; 2 );
+
+
+</string>
+			<key>table</key>
+			<string>film</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>208</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>SELECT `rental_duration`, 
+	AVG(`rental_duration`) 
+FROM film
+GROUP BY AVG(`rental_duration`)
+HAVING ( AVG(rental_duration) &gt; 2 )</string>
+		<string>SELECT `rental_duration`, 
+	AVG(`rental_duration`) AS AGVDUR
+FROM film
+GROUP BY AVG(`rental_duration`)
+HAVING ( AVG(rental_duration) &gt; 2 )</string>
+		<string>select round(AVG(length),2) as avglength, length from sakila.film
+group by length</string>
+		<string>select round(AVG(length),2) as avglength, status from sakila.film
+group by status</string>
+		<string>select round(AVG(length),2) as avglenth, status from sakila.film
+group by status</string>
+		<string>select round(AVG(f.length),2) as avglenth, status from sakila.film
+group by status</string>
+		<string>select round(AVG(f.length),2) as avglenth, from sakila.film f
+group by f.status</string>
+		<string>select round(AVG(f.length),2) as avglenth, f.status from sakila.film f
+group by f.status</string>
+		<string>select round(AVG(lenght),2) as avglenth, f.status from sakila.film f
+group by f.status</string>
+		<string>select round(AVG(f.lenght),2) as avglenth, f.status from sakila.film f
+group by f.status</string>
+		<string>select rental_rate, sum('rental_rate') from sakila.film
+group by rental_rate
+order by rental_rate</string>
+		<string>select rental_rent, sum('rental_year') from sakila.film
+group by rental_year
+order by rental_year</string>
+		<string>#4.Using the film table, find out how many films were released each year
+select release_year, sum('release_year') from sakila.film
+group by release_year
+order by release_year</string>
+		<string>#3.Using the rental table, find out how many rentals were processed by each employee.
+select rental_date, sum('rental_date') from sakila.rental
+group by rental_date
+order by rental_date</string>
+		<string>#2.Which last names appear more than once? We would use the same logic as in the previous question but this time we want to include the last names of the actors where the last name was present more than once.
+SELECT last_name, 
+	COUNT(last_name) AS NumOccurrences
+FROM actor
+GROUP BY last_name
+HAVING ( COUNT(last_name) &gt; 1 )
+
+#3.Using the rental table, find out how many rentals were processed by each employee.
+#select rental_date, sum('rental_date') from sakila.rental
+#group by rental_date
+#order by rental_date;
+
+#4.Using the film table, find out how many films were released each year
+#select release_year, sum('release_year') from sakila.film
+#group by release_year
+#order by release_year;
+
+#Using the film table, find out for each rating how many films were there.
+
+#What is the average length of films for each rating? Round off the average lengths to two decimal places.
+
+#Which kind of movies (based on rating) have an average duration of two hours or more?
+
+#lab 2.8
+#Inspect the database structure and find the best-fitting table to analyse for the next task.
+#Use the RANK() and the table of your choice rank films by length (filter out the rows that have nulls or 0s in length column). In your output, only select the columns title, length, and the rank.
+#Build on top of the previous query and rank films by length within the rating category (filter out the rows that have nulls or 0s in length column). In your output, only select the columns title, length, rating and the rank.
+#How many films are there for each of the categories? Inspect the database structure and use appropriate join to write this query.
+#Which actor has appeared in the most films?
+#Most active customer (the customer that has rented the most number of films)
+#Bonus: Which is the most rented film? The answer is Bucket Brotherhood This query might require using more than one join statement. Give it a try. We will talk about queries with multiple join statements later in the lessons.</string>
+		<string>SELECT
+	a.first_name,
+	a.last_name,
+	COUNT(a.last_name) AS num_family_name
+FROM sakila.actor a
+GROUP BY a.last_name, first_name
+HAVING a.last_name = 1</string>
+		<string>SELECT
+	a.first_name,
+	a.last_name,
+	COUNT(a.last_name) AS num_family_name
+FROM sakila.actor a
+GROUP BY a.last_name, first_name
+HAVING a.last_name = 0</string>
+		<string>SELECT
+	a.first_name,
+	a.last_name,
+	COUNT(a.last_name) AS num_family_name
+FROM sakila.actor a
+GROUP BY a.last_name, first_name</string>
+		<string>SELECT
+	a.last_name,
+	COUNT(a.last_name) AS num_family_name
+FROM sakila.actor a
+GROUP BY a.last_name
+HAVING a.last_name = 1</string>
+		<string>SELECT
+	a.first_name,
+	a.last_name,
+	COUNT(a.last_name) AS num_family_name
+FROM sakila.actor a
+GROUP BY a.last_name</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>8.0.23</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
