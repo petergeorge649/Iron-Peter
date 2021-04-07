@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>sakila</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-5097629772306923655</string>
+			<key>name</key>
+			<string>localhost</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8</string>
+			<key>contentFilterV2</key>
+			<dict>
+				<key>children</key>
+				<array/>
+				<key>filterClass</key>
+				<string>groupNode</string>
+				<key>isConjunction</key>
+				<true/>
+			</dict>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGoCwwXGBkaHiVVJG51bGzTDQ4PEBMWV05TLmtleXNaTlMu
+			b2JqZWN0c1YkY2xhc3OiERKAAoADohQVgASABYAHVHR5cGVUcm93
+			c18QHVNlbGVjdGlvbkRldGFpbFR5cGVOU0luZGV4U2V00hsPHB1c
+			TlNSYW5nZUNvdW50EACABtIfICEiWiRjbGFzc25hbWVYJGNsYXNz
+			ZXNaTlNJbmRleFNldKIjJFpOU0luZGV4U2V0WE5TT2JqZWN00h8g
+			JidcTlNEaWN0aW9uYXJ5oiYkAAgAEQAaACQAKQAyADcASQBMAFEA
+			UwBcAGIAaQBxAHwAgwCGAIgAigCNAI8AkQCTAJgAnQC9AMIAzwDR
+			ANMA2ADjAOwA9wD6AQUBDgETASAAAAAAAAACAQAAAAAAAAAoAAAA
+			AAAAAAAAAAAAAAABIw==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {695, 477}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string>
+use sakila;
+#Q1 Cars - e.g. the vehicle identification number (VIN), manufacturer, model, year, and color of the cars in your company's inventory.
+select first_name, last_name, address from address a
+join staff s
+on a.address_id = s.address_id;
+
+#Q2 Customers - e.g. the customer ID, name, phone number, email, address, city, state/province, country, and zip/postal code of the customers.
+select  p.payment_date, s.staff_id ,sum(amount) as tot_payment from staff s
+join payment p
+on s.staff_id = p.staff_id
+group by s.staff_id
+having p.payment_date like '%2006-08'
+;
+
+#Q3 Salespersons - e.g. staff ID, name, and the store at your company.
+select  f.film_id, count(actor_id)  from film f
+join film_actor fa
+on f.film_id = fa.film_id
+group by f.film_id;
+
+#Q4 Invoices - e.g. the invoice number, date, car, customer, and salesperson related to each car sale.
+
+Before solving this challenge, review your lesson about database structure and design then ask yourself:
+select sum(amount) as tot_cus, c.customer_id, c.last_name from customer c
+join payment p
+on c.customer_id= p.customer_id
+group by c.customer_id
+order by c.last_name desc</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>208</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select sum(amount) as tot_cus, c.customer_id, c.last_name from customer c
+join payment p
+on c.customer_id= p.customer_id
+group by c.customer_id
+order by c.last_name desc</string>
+		<string>select  f.film_id, count(actor_id)  from film f
+join film_actor fa
+on f.film_id = fa.film_id
+group by f.film_id</string>
+		<string>#Q2
+select  p.payment_date, s.staff_id ,sum(amount) as tot_payment from staff s
+join payment p
+on s.staff_id = p.staff_id
+group by s.staff_id
+having p.payment_date like '%2006-08'</string>
+		<string>use sakila;
+#Q1
+select first_name, last_name, address from address a
+join staff s
+on a.address_id = s.address_id</string>
+		<string>INSERT INTO staff (staff_id, first_name, last_name, address_id, store_id, username, password)
+VALUES (3, 'Tammy', 'Sanders', 5, 2,'tammy', 'skjfifdiabsifasvifb' )</string>
+		<string>ALTER TABLE staff DROP picture;
+select * from staff</string>
+		<string>SELECT COUNT(film_id) as tot_mov_extras from film 
+WHERE special_features like '%Behind the Scenes'</string>
+		<string>SELECT * FROM film
+ORDER BY length desc
+limit 10</string>
+		<string>USE sakila;
+SELECT * FROM film;
+SELECT release_year FROM film</string>
+		<string>SELECT * FROM film
+WHERE title like 'armageddo%'</string>
+		<string>select left(avg(length/60),4) as time_hour from film</string>
+		<string>ALTER TABLE rental
+ADD month varchar(20)</string>
+		<string>SELECT `rental_duration`, 
+	AVG(`rental_duration`) 
+FROM film
+GROUP BY AVG(`rental_duration`)
+HAVING ( AVG(rental_duration) &gt; 2 )</string>
+		<string>SELECT `rental_duration`, 
+	AVG(`rental_duration`) AS AGVDUR
+FROM film
+GROUP BY AVG(`rental_duration`)
+HAVING ( AVG(rental_duration) &gt; 2 )</string>
+		<string>select round(AVG(length),2) as avglength, length from sakila.film
+group by length</string>
+		<string>select round(AVG(length),2) as avglength, status from sakila.film
+group by status</string>
+		<string>select round(AVG(length),2) as avglenth, status from sakila.film
+group by status</string>
+		<string>select round(AVG(f.length),2) as avglenth, status from sakila.film
+group by status</string>
+		<string>select round(AVG(f.length),2) as avglenth, from sakila.film f
+group by f.status</string>
+		<string>select round(AVG(f.length),2) as avglenth, f.status from sakila.film f
+group by f.status</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>8.0.23</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
