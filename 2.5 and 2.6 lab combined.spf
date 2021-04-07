@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>sakila</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-5097629772306923655</string>
+			<key>name</key>
+			<string>localhost</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentFilterV2</key>
+			<dict>
+				<key>children</key>
+				<array/>
+				<key>filterClass</key>
+				<string>groupNode</string>
+				<key>isConjunction</key>
+				<true/>
+			</dict>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA0OFUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApbY2F0ZWdvcnlfaWTSIiMxMl8QD05TTXV0
+			YWJsZVN0cmluZ6MxMydYTlNTdHJpbmfSIiM1Nl5OU011dGFibGVB
+			cnJheaM1NydXTlNBcnJhedIiIyY5oiYnAAgAEQAaACQAKQAyADcA
+			SQBMAFEAUwBhAGcAbgB2AIEAiACMAI4AkACSAJYAmACaAJwAngCj
+			AKgArQDWAN0A3gDfAOEA5gDxAPoBEAEUASEBKgEvATEBMwE1AToB
+			RAFGAVIBVwFpAW0BdgF7AYoBjgGWAZsAAAAAAAACAQAAAAAAAAA6
+			AAAAAAAAAAAAAAAAAAABng==
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {1233, 783}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string># LAB 2.5
+
+
+#1. Select all the actors with the first name ‘Scarlett’.
+
+select * from actor where first_name = 'Scarlett';
+
+#2 .How many films (movies) are available for rent and how many films have been rented?
+
+USE Sakila;
+SELECT i.film_id, f.title, COUNT(r.inventory_id)
+FROM inventory i
+INNER JOIN rental r
+ON i.inventory_id = r.inventory_id
+INNER JOIN film_text f 
+ON i.film_id = f.film_id
+GROUP BY r.inventory_id
+ORDER BY COUNT(r.inventory_id) DESC;
+
+#Alternatively
+
+SELECT COUNT( inventory_id ) as numOffilmsavailable
+FROM rental
+WHERE return_date IS NULL;
+
+#3.What are the shortest and longest movie duration? Name the values max_duration and min_duration.
+
+select min(length) as min_duration from film;
+select max(length) as min_duration from film;
+
+#4.What's the average movie duration expressed in format (hours, minutes)?
+
+select left(avg(length/60),4) as time_hour from film;
+
+#5.How many distinct (different) actors' last names are there?
+
+SELECT COUNT(`last_name`)
+FROM actor;
+
+#6.Since how many days has the company been operating (check DATEDIFF() function)?
+
+select min(rental_date) from rental;
+select datediff( max(rental_date),min(rental_date)  ) as total_op_days from rental;
+
+#7.Show rental info with additional columns month and weekday. Get 20 results.
+
+ALTER TABLE rental
+ADD month varchar(20);
+
+#ALTER TABLE rental
+#ADD weekday varchar(20);
+
+#8 Add an additional column day_type with values 'weekend' and 'workday' depending on the rental day of the week.
+#ALTER TABLE rental 
+#ADD data_type varchar(20);
+INSERT INTO rental VALUES (weekday and month);
+
+#9 How many rentals were in the last month of activity?
+SELECT COUNT(RENTAL_ID) as total_rental from rental where date_format(convert(rental_date,datetime),'%b') = 'May'
+
+
+
+
+#2.6 LAB
+
+#1.Get the unique release years.
+USE sakila;
+SELECT * FROM film;
+SELECT release_year FROM film;
+
+#2.Get all films with ARMAGEDDON in the title.
+
+SELECT * FROM film
+WHERE title like 'armageddo%';
+
+#3 Get all films which title ends with APOLLO.
+
+SELECT * FROM film
+WHERE title like '%apollo';
+
+#4 Get 10 the longest films.
+
+SELECT * FROM film
+ORDER BY length desc
+limit 10;
+
+#5.How many films include Behind the Scenes content?
+
+SELECT COUNT(film_id) as tot_mov_extras from film 
+WHERE special_features like '%Behind the Scenes';
+
+#6.Drop column picture from staff.
+
+ ALTER TABLE staff DROP picture;
+ select * from staff;
+ 
+
+#7 A new person is hired to help Jon. Her name is TAMMY SANDERS, and she is a customer. Update the database accordingly.
+
+ INSERT INTO staff (staff_id, first_name, last_name, address_id, store_id, username, password)
+VALUES (3, 'Tammy', 'Sanders', 5, 2,'tammy', 'skjfifdiabsifasvifb' );
+
+#8 Add a rental for movie "Academy Dinosaur" by the customer "Charlotte Hunter" from employee Mike Hillyer at Store 1. You can use current date for the rental_date column in the rental table. Hint: Check the columns in the table rental and see what information you would need to add there. You can query those pieces of information in other tables. For eg., you would notice that you need customer_id information as well. To get that you can use the following query:
+
+select customer_id from sakila.customer
+where first_name = 'CHARLOTTE' and last_name = 'HUNTER';
+
+select film_id from film
+where title like 'Academy%';
+
+select * from inventory
+where film_id = 1;
+
+select * from rental;
+INSERT INTO rental (rental_id, rental_date, inventory_id, customer_id, return_date, staff_id, last_update)
+VALUES (1999, '2015-05-31 00:46:31', 3, 130, '2015-06-31 00:46:31,1', '2015-05-31 00:46:31');
+
+
+
+
+
+</string>
+			<key>table</key>
+			<string>category</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>208</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>INSERT INTO staff (staff_id, first_name, last_name, address_id, store_id, username, password)
+VALUES (3, 'Tammy', 'Sanders', 5, 2,'tammy', 'skjfifdiabsifasvifb' )</string>
+		<string>ALTER TABLE staff DROP picture;
+select * from staff</string>
+		<string>SELECT COUNT(film_id) as tot_mov_extras from film 
+WHERE special_features like '%Behind the Scenes'</string>
+		<string>SELECT * FROM film
+ORDER BY length desc
+limit 10</string>
+		<string>USE sakila;
+SELECT * FROM film;
+SELECT release_year FROM film</string>
+		<string>SELECT * FROM film
+WHERE title like 'armageddo%'</string>
+		<string>select left(avg(length/60),4) as time_hour from film</string>
+		<string>ALTER TABLE rental
+ADD month varchar(20)</string>
+		<string>SELECT `rental_duration`, 
+	AVG(`rental_duration`) 
+FROM film
+GROUP BY AVG(`rental_duration`)
+HAVING ( AVG(rental_duration) &gt; 2 )</string>
+		<string>SELECT `rental_duration`, 
+	AVG(`rental_duration`) AS AGVDUR
+FROM film
+GROUP BY AVG(`rental_duration`)
+HAVING ( AVG(rental_duration) &gt; 2 )</string>
+		<string>select round(AVG(length),2) as avglength, length from sakila.film
+group by length</string>
+		<string>select round(AVG(length),2) as avglength, status from sakila.film
+group by status</string>
+		<string>select round(AVG(length),2) as avglenth, status from sakila.film
+group by status</string>
+		<string>select round(AVG(f.length),2) as avglenth, status from sakila.film
+group by status</string>
+		<string>select round(AVG(f.length),2) as avglenth, from sakila.film f
+group by f.status</string>
+		<string>select round(AVG(f.length),2) as avglenth, f.status from sakila.film f
+group by f.status</string>
+		<string>select round(AVG(lenght),2) as avglenth, f.status from sakila.film f
+group by f.status</string>
+		<string>select round(AVG(f.lenght),2) as avglenth, f.status from sakila.film f
+group by f.status</string>
+		<string>select rental_rate, sum('rental_rate') from sakila.film
+group by rental_rate
+order by rental_rate</string>
+		<string>select rental_rent, sum('rental_year') from sakila.film
+group by rental_year
+order by rental_year</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>8.0.23</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
