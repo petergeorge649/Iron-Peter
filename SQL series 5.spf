@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ContentFilters</key>
+	<dict/>
+	<key>auto_connect</key>
+	<true/>
+	<key>data</key>
+	<dict>
+		<key>connection</key>
+		<dict>
+			<key>database</key>
+			<string>sakila</string>
+			<key>host</key>
+			<string>127.0.0.1</string>
+			<key>kcid</key>
+			<string>-5097629772306923655</string>
+			<key>name</key>
+			<string>localhost</string>
+			<key>rdbms_type</key>
+			<string>mysql</string>
+			<key>sslCACertFileLocation</key>
+			<string></string>
+			<key>sslCACertFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslCertificateFileLocation</key>
+			<string></string>
+			<key>sslCertificateFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>sslKeyFileLocation</key>
+			<string></string>
+			<key>sslKeyFileLocationEnabled</key>
+			<integer>0</integer>
+			<key>type</key>
+			<string>SPTCPIPConnection</string>
+			<key>useSSL</key>
+			<integer>0</integer>
+			<key>user</key>
+			<string>root</string>
+		</dict>
+		<key>session</key>
+		<dict>
+			<key>connectionEncoding</key>
+			<string>utf8mb4</string>
+			<key>contentFilterV2</key>
+			<dict>
+				<key>column</key>
+				<string>film_id</string>
+				<key>filterClass</key>
+				<string>expressionNode</string>
+				<key>filterComparison</key>
+				<string>=</string>
+				<key>filterType</key>
+				<string>number</string>
+				<key>filterValues</key>
+				<array>
+					<string>Dinosaur </string>
+				</array>
+			</dict>
+			<key>contentPageNumber</key>
+			<integer>1</integer>
+			<key>contentSelection</key>
+			<data>
+			YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0
+			b3BYJG9iamVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRk
+			YXRhgAGtCwwZGhscHSEoLDA0OFUkbnVsbNMNDg8QFBhXTlMua2V5
+			c1pOUy5vYmplY3RzViRjbGFzc6MREhOAAoADgASjFRYXgAWABoAI
+			gAxUdHlwZVRyb3dzVGtleXNfECZTZWxlY3Rpb25EZXRhaWxUeXBl
+			UHJpbWFyeUtleWVkRGV0YWlsc9MNDg8eHyCgoIAH0iIjJCVaJGNs
+			YXNzbmFtZVgkY2xhc3Nlc18QE05TTXV0YWJsZURpY3Rpb25hcnmj
+			JCYnXE5TRGljdGlvbmFyeVhOU09iamVjdNIODykroSqACYAL0g8t
+			Li9ZTlMuc3RyaW5ngApXZmlsbV9pZNIiIzEyXxAPTlNNdXRhYmxl
+			U3RyaW5nozEzJ1hOU1N0cmluZ9IiIzU2Xk5TTXV0YWJsZUFycmF5
+			ozU3J1dOU0FycmF50iIjJjmiJicACAARABoAJAApADIANwBJAEwA
+			UQBTAGEAZwBuAHYAgQCIAIwAjgCQAJIAlgCYAJoAnACeAKMAqACt
+			ANYA3QDeAN8A4QDmAPEA+gEQARQBIQEqAS8BMQEzATUBOgFEAUYB
+			TgFTAWUBaQFyAXcBhgGKAZIBlwAAAAAAAAIBAAAAAAAAADoAAAAA
+			AAAAAAAAAAAAAAGa
+			</data>
+			<key>contentSortColIsAsc</key>
+			<true/>
+			<key>contentViewport</key>
+			<string>{{0, 0}, {765, 434}}</string>
+			<key>isToolbarVisible</key>
+			<true/>
+			<key>queries</key>
+			<string># 0 use sakila
+
+#1.Using multiple JOIN() clauses display the store ID, city, and country of each store.
+
+SELECT store_id, city, country FROM storeINNER JOIN addressUSING(address_id)INNER JOIN cityUSING(city_id)INNER JOIN countryUSING(country_id);          
+                
+#2.Display the total payment amount for each store.
+
+SELECT amount, SUM(amount) FROM payment GROUP BY amount;
+
+#3.What is the average film length per each category? Which category of films are the longest?
+SELECT c.name, count(fc.film_id) as amount_filmsFROM sakila.category as c JOIN sakila.film_category as fc ON c.category_id = fc.category_idGROUP BY c.name;
+
+#4.Display the 2 most frequently rented movies in descending order.
+SELECT rt.film_id, title, count(film_id) As times_rented    FROM rental AS ltLEFT JOIN inventory AS rt   USING(inventory_id)LEFT JOIN film AS endt   USING(film_id)GROUP BY film_id    ORDER BY times_rented DESC LIMIT 2
+
+#5.Display the top 5 categories with highest revenue (payment amount) in descending order.
+
+SELECT category_id, sum(payment) AS rev    FROM paymentJOIN rental    USING(rental_id)JOIN film_category   JOIN (film_id)payment category   USING (category_id)GROUP BY category_id    order rev DESC LIMIT 5
+
+#6.Is the Academy Dinosaur movie available for rent from Store 1? If yes, display the title, store_id and inventory_id of the available copies of that movie.
+SELECT *FROM inventory;SELECT film_id, title, count(film_id)FROM inventory as iWHERE store_id = 1INNER JOIN film AS fUSING (film_id)GROUP BYfilm_idHAVING title = 'Academy Dinosaur';
+
+</string>
+			<key>table</key>
+			<string>film</string>
+			<key>view</key>
+			<string>SP_VIEW_CUSTOMQUERY</string>
+			<key>windowVerticalDividerPosition</key>
+			<real>208</real>
+		</dict>
+	</dict>
+	<key>encrypted</key>
+	<false/>
+	<key>format</key>
+	<string>connection</string>
+	<key>queryFavorites</key>
+	<array/>
+	<key>queryHistory</key>
+	<array>
+		<string>select *
+from inventory;
+select film_id, title, count(film_id)
+from inventory as i
+where store_id = 1
+inner join film as f
+using (film_id)
+group by film_id
+having title = 'Academy Dinosaur'</string>
+		<string>SELECT c.name, count(fc.film_id) as amount_films
+FROM sakila.category as c 
+JOIN sakila.film_category as fc 
+ON c.category_id = fc.category_id
+GROUP BY c.name</string>
+		<string>SELECT amount, SUM(amount) FROM payment GROUP BY amount</string>
+		<string>select category_id, sum(payment) as rev
+    from payment
+join rental
+    using(rental_id)
+join film_category
+   join (film_id)payment
+join category
+   using (category_id)
+group by category_id
+    order rev desc limit 5 (failed)</string>
+		<string>SELECT COUNT(*)
+FROM `payment`
+GROUP BY amount 
+ORDER BY amount DESC LIMIT 5</string>
+		<string>SELECT COUNT(*)
+FROM Movie
+WHERE Year &gt; 1990 DESC LIMIT 5</string>
+		<string>SELECT COUNT(*)
+FROM Movie
+WHERE Year &gt; 1990 DESC LIMIT 2</string>
+		<string>ELECT c.name, count(fc.film_id) as amount_films
+FROM sakila.category as c 
+JOIN sakila.film_category as fc 
+ON c.category_id = fc.category_id
+GROUP BY c.name</string>
+		<string>select title, length, rank() over (partition by f.length) as 'Rank'
+from sakila.film f
+where length &lt;&gt; ' ' or length is not null;
+select round(AVG(length),2) as avglength, length from sakila.film
+group by `category` order by DESC</string>
+		<string>SELECT rt.film_id, title, count(film_id) As times_rented
+    FROM rental AS lt
+LEFT JOIN inventory AS rt
+   USING(inventory_id)
+LEFT JOIN film AS endt
+   USING(film_id)
+GROUP BY film_id
+    ORDER BY times_rented DESC LIMIT 2</string>
+		<string>SELECT F.TITLE
+FROM FILM AS F
+LEFT OUTER JOIN INVENTORY AS (FILM_ID)
+LEFT OUTER JOIN RENTAL AS R USING (INVENTORY_ID)
+GROUP BY F.TITLE,R.RENTAL_ID
+ORDER BY COUNT(R.RENTAL_ID) DESC   
+LIMIT 4,1</string>
+		<string>SELECT title, rental_id, count(*) as Total_Rentals
+FROM rental
+GROUP BY `rental_id`
+ORDER BY Total_Rentals DESC LIMIT 2</string>
+		<string>SELECT rental_id, count(*) as Total_Rentals
+FROM rental
+GROUP BY `rental_id`
+ORDER BY Total_Rentals DESC LIMIT 2</string>
+		<string>SELECT customer_id, count(*) as Total_Rentals
+FROM rental
+GROUP BY customer_id
+ORDER BY Total_Rentals DESC LIMIT 1</string>
+		<string>select title, length, rank() over (partition by f.length) as 'Rank'
+from sakila.film f
+where length &lt;&gt; ' ' or length is not null;
+select round(AVG(lengt h),2) as avglength, length from sakila.film
+group by `category_id` order by DESC</string>
+		<string>SELECT r.rental_id, cust.customer_id, count(*) as Total_Rentals
+FROM rental as r
+INNER JOIN customer AS cust on r.customer_id = cust.customer_id
+GROUP BY cust.customer_id</string>
+		<string>select title, length, rank() over (partition by f.length) as 'Rank'
+from sakila.film f
+where length &lt;&gt; ' ' or length is not null;
+select round(AVG(lengt h),2) as avglength, length from sakila.film
+group by `category_id`</string>
+		<string>select title, length, rank() over (partition by f.length) as 'Rank'
+from sakila.film f
+where length &lt;&gt; ' ' or length is not null;
+select round(AVG(length),2) as avglength, length from sakila.film
+group by category</string>
+		<string>select title, length, rank() over (partition by f.length) as 'Rank'
+from sakila.film f
+where length &lt;&gt; ' ' or length is not null;
+select round(AVG(length),2) as avglength, length from sakila.film
+group by length</string>
+		<string>select round(AVG(length),2) as avglength, length from sakila.film
+group by category</string>
+	</array>
+	<key>rdbms_type</key>
+	<string>mysql</string>
+	<key>rdbms_version</key>
+	<string>8.0.23</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>
